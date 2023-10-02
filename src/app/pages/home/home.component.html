@@ -1,3 +1,8 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div>
+    <h2>Bienvenue sur le site des jeux olympiques</h2>
+    <hr />
+    <p>Sur ce site, vous aurez le nombre de médailles remportés par {{ listOlympics[0].country }} pays différents</p>
+</div> 
+<div>
+    <ngx-charts-advanced-pie-chart></ngx-charts-advanced-pie-chart>
+</div>
