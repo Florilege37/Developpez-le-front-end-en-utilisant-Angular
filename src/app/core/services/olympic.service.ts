@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
+import { Country } from '../models/Country';
 
 @Injectable({
   providedIn: 'root',
@@ -30,14 +31,35 @@ export class OlympicService {
     return this.olympics$.asObservable();
   }
 
-  getOlympicsById(id : number) : Olympic  {
-    let listOlympics!: Olympic[];
-    this.olympics$.asObservable().subscribe(x => {listOlympics=x});
-    const olympic = listOlympics.find(olympic => olympic.id === id)
-    if (!olympic){
-      throw new Error("Olympic not found !");
-    } else {
-      return olympic;
+  createPaysCount(listOlympics: Olympic[]): Array<Country> {
+    let listPaysCount: Array<Country> = [];
+    for (let i=0; i<listOlympics.length; i++){
+      let count = 0;
+      let pays = listOlympics[i].country;
+      for (let j=0; j < listOlympics[i].participations.length ; j++){
+        count+=listOlympics[i].participations[j].medalsCount;
+      }
+      let paysCount = {name: pays, value: count}
+      listPaysCount.push(paysCount);
     }
+    
+    return listPaysCount;
   }
+
+  createStatistics(listOlympics: Olympic[], nomPays : string): Country {
+    console.log("AHHHHHHHHHHHHHHHHHHH");
+    let country !: Country;
+    let olympic = listOlympics.find(olympic => olympic.country === nomPays);
+    if (olympic!=undefined){
+      for (let i=0; i < olympic.participations.length; i++){
+        let year = olympic.participations[i].year;
+        let medalsCount = olympic.participations[i].medalsCount;
+        let statistics = {name: year, value: medalsCount};
+        country.series?.push(statistics)
+        console.log("Taille" + statistics);
+      }
+    }
+    return country;
+  }
+  
 }

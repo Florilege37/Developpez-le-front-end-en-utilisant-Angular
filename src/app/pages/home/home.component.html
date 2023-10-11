@@ -1,8 +1,18 @@
 <div>
     <h2>Bienvenue sur le site des jeux olympiques</h2>
     <hr />
-    <p>Sur ce site, vous aurez le nombre de médailles remportés par {{ listOlympics[0].country }} pays différents</p>
-</div> 
-<div>
-    <ngx-charts-advanced-pie-chart></ngx-charts-advanced-pie-chart>
+</div>
+<div class="chartContainer">
+    <p class="chartTitle">Medals Per Country</p>
+    <div class="subTitle">
+        <div class="subContainer">
+            <p class="number">Number of JOs </p>
+            <p class="number"> {{ listOlympics[0].participations.length }} </p>  
+        </div>
+        <div class="subContainer">
+            <p class="number">Number of Countries </p>
+            <p class="number"> {{ listOlympics.length }} </p>  
+        </div>
+    </div>
+    <ngx-charts-pie-chart class="chart" [results]="listPaysCount" [labels]="true" [trimLabels]="false" [view]="[700,700]"></ngx-charts-pie-chart>
 </div>
