@@ -14,5 +14,5 @@
             <p class="number"> {{ listOlympics.length }} </p>  
         </div>
     </div>
-    <ngx-charts-pie-chart class="chart" [results]="listPaysCount" [labels]="true" [trimLabels]="false" [view]="[700,700]"></ngx-charts-pie-chart>
+    <ngx-charts-pie-chart class="chart" [results]="listPaysCount" [labels]="true" [trimLabels]="false" (select)="goToCountry($event)"></ngx-charts-pie-chart>
 </div>

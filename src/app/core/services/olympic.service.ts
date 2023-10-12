@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, count, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Country } from '../models/Country';
 
@@ -31,6 +31,11 @@ export class OlympicService {
     return this.olympics$.asObservable();
   }
 
+  /**
+   * 
+   * @param listOlympics 
+   * @returns Liste de Country contenant le nom du Pays et son nombre de médaille remportées.
+   */
   createPaysCount(listOlympics: Olympic[]): Array<Country> {
     let listPaysCount: Array<Country> = [];
     for (let i=0; i<listOlympics.length; i++){
@@ -39,7 +44,7 @@ export class OlympicService {
       for (let j=0; j < listOlympics[i].participations.length ; j++){
         count+=listOlympics[i].participations[j].medalsCount;
       }
-      let paysCount = {name: pays, value: count}
+      let paysCount = {name: pays, value: count, series: []}
       listPaysCount.push(paysCount);
     }
     
@@ -47,19 +52,39 @@ export class OlympicService {
   }
 
   createStatistics(listOlympics: Olympic[], nomPays : string): Country {
-    console.log("AHHHHHHHHHHHHHHHHHHH");
-    let country !: Country;
-    let olympic = listOlympics.find(olympic => olympic.country === nomPays);
-    if (olympic!=undefined){
-      for (let i=0; i < olympic.participations.length; i++){
-        let year = olympic.participations[i].year;
-        let medalsCount = olympic.participations[i].medalsCount;
-        let statistics = {name: year, value: medalsCount};
-        country.series?.push(statistics)
-        console.log("Taille" + statistics);
+    let country : Country = {name: nomPays, value: 0, series: []};
+    const olympic = listOlympics.find(olympic => olympic.country === nomPays);
+    if (olympic!=undefined && country.series!=undefined){
+      for (let i in olympic.participations){
+        const year = olympic.participations[i].year;
+        const medalsCount = olympic.participations[i].medalsCount;
+        country.series.push({name: ""+year, value: medalsCount});
       }
     }
+    console.log(country);
     return country;
+  }
+
+  getAthleteCount(nomPays : string, listOlympics: Olympic[]) : number{
+    const olympic = listOlympics.find(olympic => olympic.country === nomPays);
+    let total = 0
+    if (olympic!=undefined){
+      for (let i in olympic.participations){
+        total+=olympic.participations[i].athleteCount;
+      }
+    }
+    return total
+  }
+
+  getMedalsCount(nomPays : string, listOlympics: Olympic[]) : number{
+    const olympic = listOlympics.find(olympic => olympic.country === nomPays);
+    let total = 0
+    if (olympic!=undefined){
+      for (let i in olympic.participations){
+        total+=olympic.participations[i].medalsCount;
+      }
+    }
+    return total
   }
   
 }

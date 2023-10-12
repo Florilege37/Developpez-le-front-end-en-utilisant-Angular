@@ -1,0 +1,21 @@
+<div class="chartContainer">
+    <p class="chartTitle">Name of the Country</p>
+    <div class="subTitle">
+        <div class="subContainer">
+            <p class="number"> Number of entries </p>
+            <p class="number"> {{this.country.series.length}} </p>  
+        </div>
+        <div class="subContainer">
+            <p class="number"> Total number of medals </p>
+            <p class="number"> {{this.totalMedals}} </p> 
+        </div>
+        <div class="subContainer">
+            <p class="number"> Total number of athletes </p>
+            <p class="number"> {{this.totalAthlete}} </p>  
+        </div>
+    </div>
+    <ngx-charts-line-chart [results]="countries" [yAxis]="true" [xAxis]="true" [autoScale]="true" [view]="[scrWidth,400]"></ngx-charts-line-chart>
+    <a class="subContainer" routerLink="">Back to home</a>
+</div>
+
+

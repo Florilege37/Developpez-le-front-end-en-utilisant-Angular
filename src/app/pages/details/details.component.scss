@@ -1,0 +1,61 @@
+div {
+    margin: 8px;
+}
+
+.chart .ngx-charts-outer{
+    margin: auto;
+}
+
+.chartContainer{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    a{
+        text-decoration: none;
+    }
+}
+
+.chartTitle{
+    border : solid;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: #04838F;
+    color: white;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 0;
+}
+
+.subTitle{
+    display: flex;
+    .chartTitle{
+        color: black;
+        background-color: white;
+        border-color: #04838F;
+    }
+}
+
+.subContainer{
+    border : solid;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: white;
+    border-color: #04838F;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 0;
+    color: black;
+    .number{
+        text-align: center;
+        margin: 0;
+        margin-top: 4px;
+    }
+}
