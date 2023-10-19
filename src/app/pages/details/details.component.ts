@@ -32,7 +32,6 @@ export class DetailsComponent implements OnInit{
       this.listOlympics=x;
       const countryName = this.route.snapshot.params['name'];
       this.country = this.olympicService.createStatistics(this.listOlympics, countryName);
-      //console.log("EGGGTAA" + this.country.series?.length)
       this.countries.push(this.country)
       this.totalAthlete = this.olympicService.getAthleteCount(countryName,this.listOlympics)
       this.totalMedals = this.olympicService.getMedalsCount(countryName,this.listOlympics)

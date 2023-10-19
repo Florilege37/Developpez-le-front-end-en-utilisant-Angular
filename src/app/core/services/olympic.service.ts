@@ -51,6 +51,12 @@ export class OlympicService {
     return listPaysCount;
   }
 
+  /**
+   * 
+   * @param listOlympics 
+   * @param nomPays 
+   * @returns Un Country contenant le nombre de médaille gagné par années dans le series
+   */
   createStatistics(listOlympics: Olympic[], nomPays : string): Country {
     let country : Country = {name: nomPays, value: 0, series: []};
     const olympic = listOlympics.find(olympic => olympic.country === nomPays);
@@ -64,7 +70,13 @@ export class OlympicService {
     console.log(country);
     return country;
   }
-
+  
+  /**
+   * 
+   * @param nomPays 
+   * @param listOlympics 
+   * @returns Le nombre d'athlete ayant participé à tous les JO
+   */
   getAthleteCount(nomPays : string, listOlympics: Olympic[]) : number{
     const olympic = listOlympics.find(olympic => olympic.country === nomPays);
     let total = 0
@@ -76,6 +88,12 @@ export class OlympicService {
     return total
   }
 
+  /**
+   * 
+   * @param nomPays 
+   * @param listOlympics 
+   * @returns Le nombre de médaille gagnées au cours de tous les JO
+   */
   getMedalsCount(nomPays : string, listOlympics: Olympic[]) : number{
     const olympic = listOlympics.find(olympic => olympic.country === nomPays);
     let total = 0
