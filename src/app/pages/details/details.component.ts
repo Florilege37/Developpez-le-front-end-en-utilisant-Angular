@@ -12,15 +12,13 @@ import { ActivatedRoute } from '@angular/router';
 
 export class DetailsComponent implements OnInit{
   
-  listOlympics!: Olympic[];
-
   public country!: Country;
 
   public totalMedals!: number;
 
   public totalAthlete!: number;
 
-  countries : Country[] = [];
+  public countries : Country[] = [];
 
   constructor(private olympicService: OlympicService,
               private route: ActivatedRoute) {
@@ -28,26 +26,25 @@ export class DetailsComponent implements OnInit{
               }
 
   ngOnInit(): void {
+    var listOlympics!: Olympic[];
     this.olympicService.getOlympics().subscribe(x => {
-      this.listOlympics=x;
+      listOlympics=x;
+      this.olympicService.controlName(this.route.snapshot.params['name'], listOlympics);
       const countryName = this.route.snapshot.params['name'];
-      this.country = this.olympicService.createStatistics(this.listOlympics, countryName);
+      this.country = this.olympicService.createStatistics(listOlympics, countryName);
       this.countries.push(this.country)
-      this.totalAthlete = this.olympicService.getAthleteCount(countryName,this.listOlympics)
-      this.totalMedals = this.olympicService.getMedalsCount(countryName,this.listOlympics)
-      console.log(this.countries)
+      this.totalAthlete = this.olympicService.getAthleteCount(countryName,listOlympics)
+      this.totalMedals = this.olympicService.getMedalsCount(countryName,listOlympics)
     });
-    
   }
 
-  scrHeight:any;
-  scrWidth:any;
+  scrHeight!:number;
+  scrWidth!:number;
 
-  @HostListener('window:resize', ['$event'])
-    getScreenSize(event?: any) {
+  @HostListener('window:resize')
+    getScreenSize() {
           this.scrHeight = window.innerHeight;
           this.scrWidth = window.innerWidth;
-          console.log(this.scrHeight, this.scrWidth);
     }
 
 

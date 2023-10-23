@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { catchError, count, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Country } from '../models/Country';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>({} as Olympic[]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private router: Router) {}
 
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
@@ -67,7 +69,6 @@ export class OlympicService {
         country.series.push({name: ""+year, value: medalsCount});
       }
     }
-    console.log(country);
     return country;
   }
   
@@ -103,6 +104,19 @@ export class OlympicService {
       }
     }
     return total
+  }
+
+  /**
+   * Test si l'ID dans l'URL est valide (si le nom du pays est dans list olympic)
+   * @param nomPays 
+   * @param listOlympics
+   * @returns Renvoie sur une page d'erreur
+   */
+  controlName(nomPays : string, listOlympics: Olympic[]){
+    const pays = listOlympics.find(olympic => olympic.country === nomPays);
+    if (pays === undefined) {
+      this.router.navigateByUrl(`error`)
+    }
   }
   
 }

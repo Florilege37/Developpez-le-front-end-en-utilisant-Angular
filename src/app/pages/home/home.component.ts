@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   
-  listOlympics!: Olympic[];
+  public listOlympics!: Olympic[];
 
   public listPaysCount!: Array<Country>;
 
@@ -26,8 +26,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  goToCountry(event: any) : void{
-    console.log();
+  goToCountry(event: Country) : void{
     this.router.navigateByUrl(`pays/${event.name}`)
   }
 

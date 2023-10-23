@@ -4,7 +4,7 @@
 </div>
 <div class="chartContainer">
     <p class="chartTitle">Medals Per Country</p>
-    <div class="subTitle">
+    <div *ngIf ="listOlympics && listOlympics.length && listOlympics[0].participations.length != 0"  class="subTitle">
         <div class="subContainer">
             <p class="number">Number of JOs </p>
             <p class="number"> {{ listOlympics[0].participations.length }} </p>  
