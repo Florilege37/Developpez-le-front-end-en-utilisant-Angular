@@ -1,8 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Country } from 'src/app/core/models/Country';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -10,7 +11,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./details.component.scss']
 })
 
-export class DetailsComponent implements OnInit{
+export class DetailsComponent implements OnInit, OnDestroy{
+
+  public olympicSubs!: Subscription;
   
   public country!: Country;
 
@@ -27,7 +30,7 @@ export class DetailsComponent implements OnInit{
 
   ngOnInit(): void {
     var listOlympics!: Olympic[];
-    this.olympicService.getOlympics().subscribe(x => {
+    this.olympicSubs =  this.olympicService.getOlympics().subscribe(x => {
       listOlympics=x;
       this.olympicService.controlName(this.route.snapshot.params['name'], listOlympics);
       const countryName = this.route.snapshot.params['name'];
@@ -36,6 +39,11 @@ export class DetailsComponent implements OnInit{
       this.totalAthlete = this.olympicService.getAthleteCount(countryName,listOlympics)
       this.totalMedals = this.olympicService.getMedalsCount(countryName,listOlympics)
     });
+   
+  }
+
+  ngOnDestroy() : void{
+    this.olympicSubs.unsubscribe();
   }
 
   scrHeight!:number;
